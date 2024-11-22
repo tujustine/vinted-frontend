@@ -3,12 +3,12 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+const Header = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     Cookies.remove("userToken");
-    setIsLoggedIn(false);
+    setIsLogin(false);
     navigate("/");
   };
 
@@ -24,7 +24,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
         </div>
         <div className="three-btn">
           <div className="two-btn">
-            {!isLoggedIn ? (
+            {!isLogin ? (
               <>
                 <button
                   className="inscription"

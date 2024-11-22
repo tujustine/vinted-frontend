@@ -14,27 +14,27 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     if (Cookies.get("userToken")) {
-      setIsLoggedIn(true);
+      setIsLogin(true);
     }
   }, []);
 
   return (
     <Router>
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Header isLogin={isLogin} setIsLogin={setIsLogin} />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/offer/:id" element={<Offer />}></Route>
         <Route
           path="/signup"
-          element={<Signup setIsLoggedIn={setIsLoggedIn} />}
+          element={<Signup setIsLogin={setIsLogin} />}
         ></Route>
         <Route
           path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          element={<Login setIsLogin={setIsLogin} />}
         ></Route>
       </Routes>
       <Footer />

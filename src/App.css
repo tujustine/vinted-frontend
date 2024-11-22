@@ -1,7 +1,7 @@
 /* GLOBAL */
 
 #root {
-  font-family: "Roboto";
+  font-family: "Maison Neue";
 }
 
 .container {
@@ -342,10 +342,9 @@ h2 {
   /* width: 300px; */
 }
 
-/* SIGNUP */
-
-/* LOGIN */
-.login-container {
+/* LOGIN & LOGIN */
+.login-container,
+.signup-container {
   max-width: 1240px;
   margin: 0 auto;
   display: flex;
@@ -353,7 +352,8 @@ h2 {
   text-align: center;
 }
 
-.login {
+.login,
+.signup {
   display: flex;
   flex-direction: column;
   width: 275px;
@@ -369,6 +369,7 @@ h2 {
     border: none;
     font-size: 16px;
     margin-bottom: 20px;
+    margin-top: 20px;
     cursor: pointer;
   }
 
@@ -383,8 +384,36 @@ h2 {
   }
 }
 
-.redirection-signup {
+.redirection-signup,
+.redirection-login {
   text-decoration: none;
   color: #2cb1ba;
   font-size: 12px;
+}
+
+.newsletter-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.newsletter-checkbox input[type="checkbox"] {
+  margin: 0 15px 0 0;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.checkbox-container {
+  padding: 10px;
+
+  span {
+    color: #666;
+  }
+
+  p {
+    text-align: left;
+    font-size: 12px;
+    color: #999;
+  }
 }
