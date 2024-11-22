@@ -4,15 +4,31 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const Home = ({ search }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [minMaxPrice, setMinMaxPrice] = useState([0, 500]);
+  const [sort, setSort] = useState(false);
+
+  const handleMinMaxSort = (event, n) => {
+    const newMinMaxPrice = [...minMaxPrice];
+    newMinMaxPrice[n] = Number(event.target.value);
+    setMinMaxPrice(newMinMaxPrice);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/v2/offers`
+          `${import.meta.env.VITE_API_URL}/v2/offers`,
+          {
+            params: {
+              title: search,
+              priceMin: minMaxPrice[0],
+              priceMax: minMaxPrice[1],
+              sort: sort ? "price-desc" : "price-asc",
+            },
+          }
         );
         // console.log(response.data);
         setData(response.data);
@@ -22,7 +38,7 @@ const Home = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [search, minMaxPrice, sort]);
 
   return isLoading ? (
     <span className="loading">En cours de chargement...</span>
@@ -42,12 +58,44 @@ const Home = () => {
           <div className="tri-par-prix">
             <span>Trier par prix : </span>
             <span>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={sort}
+                name="sort"
+                value={sort}
+                onChange={() => {
+                  if (sort) {
+                    setSort(false);
+                    sortValue = "price-desc";
+                  } else {
+                    setSort(true);
+                    sortValue = "price-asc";
+                  }
+                }}
+              />
             </span>
           </div>
           <div className="tri-range-prix">
             <p>Prix entre :</p>
-            <span>
+            <input
+              type="text"
+              placeholder="0"
+              name="minimum"
+              // value={minMaxPrice[0]}
+              onChange={(event) => {
+                handleMinMaxSort(event, 0);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="500"
+              name="maximum"
+              // value={minMaxPrice[1]}
+              onChange={(event) => {
+                handleMinMaxSort(event, 1);
+              }}
+            />
+            {/* <span>
               <input
                 type="range"
                 id="prix"
@@ -56,13 +104,16 @@ const Home = () => {
                 max="500"
                 step="5"
               />
-            </span>
+            </span> */}
           </div>
         </div>
         {/* <div className="offers-wrapper"> */}
+
         <div className="all-offers">
           {data.offers.map((offer) => {
+            // const regex = new RegExp(search, "i");
             return (
+              // regex.test(offer.product_name) && (
               <Link
                 to={`/offer/${offer._id}`}
                 key={offer._id}
@@ -111,6 +162,7 @@ const Home = () => {
                 </div>
               </Link>
             );
+            // );
           })}
         </div>
       </div>

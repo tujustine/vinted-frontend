@@ -14,27 +14,16 @@ const Signup = ({ setIsLogin }) => {
     newsletter: false,
   });
 
-  const handleUsernameChange = (event) => {
+  const handleInputChange = (event, key) => {
     const newObj = { ...userInfo };
-    newObj.username = event.target.value;
-    setUserInfo(newObj);
-  };
-
-  const handleEmailChange = (event) => {
-    const newObj = { ...userInfo };
-    newObj.email = event.target.value;
-    setUserInfo(newObj);
-  };
-
-  const handlePasswordChange = (event) => {
-    const newObj = { ...userInfo };
-    newObj.password = event.target.value;
+    newObj[key] = event.target.value;
     setUserInfo(newObj);
   };
 
   const handleNewsletterChange = (event) => {
     const newObj = { ...userInfo };
-    newObj.newsletter = event.target.value;
+    newObj.newsletter = event.target.checked;
+    // newObj.newsletter = !userInfo.newsletter;
     setUserInfo(newObj);
   };
 
@@ -70,21 +59,27 @@ const Signup = ({ setIsLogin }) => {
               type="text"
               name="username"
               value={userInfo.username}
-              onChange={handleUsernameChange}
+              onChange={(event) => {
+                handleInputChange(event, "username");
+              }}
             />
             <input
               placeholder="Email"
               type="email"
               name="email"
               value={userInfo.email}
-              onChange={handleEmailChange}
+              onChange={(event) => {
+                handleInputChange(event, "email");
+              }}
             />
             <input
               placeholder="Mot de passe"
               type="password"
               name="username"
               value={userInfo.password}
-              onChange={handlePasswordChange}
+              onChange={(event) => {
+                handleInputChange(event, "password");
+              }}
             />
             <div className="checkbox-container">
               <div className="newsletter-checkbox">

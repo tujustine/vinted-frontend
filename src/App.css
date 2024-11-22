@@ -365,7 +365,6 @@ h2 {
     border-radius: 5px;
     padding: 10px 20px;
     height: 45px;
-    /* width: 100%; */
     border: none;
     font-size: 16px;
     margin-bottom: 20px;
@@ -391,19 +390,6 @@ h2 {
   font-size: 12px;
 }
 
-.newsletter-checkbox {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.newsletter-checkbox input[type="checkbox"] {
-  margin: 0 15px 0 0;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-}
-
 .checkbox-container {
   padding: 10px;
 
@@ -415,5 +401,18 @@ h2 {
     text-align: left;
     font-size: 12px;
     color: #999;
+  }
+
+  .newsletter-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    input[type="checkbox"] {
+      margin: 0 15px 0 0;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
   }
 }

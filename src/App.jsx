@@ -15,6 +15,8 @@ import Footer from "./components/Footer";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const [search, setSearch] = useState("");
+  // const [sortQuery, setSortQuery] = useState({});
 
   useEffect(() => {
     if (Cookies.get("userToken")) {
@@ -24,9 +26,14 @@ function App() {
 
   return (
     <Router>
-      <Header isLogin={isLogin} setIsLogin={setIsLogin} />
+      <Header
+        isLogin={isLogin}
+        setIsLogin={setIsLogin}
+        search={search}
+        setSearch={setSearch}
+      />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/" element={<Home search={search} />}></Route>
         <Route path="/offer/:id" element={<Offer />}></Route>
         <Route
           path="/signup"

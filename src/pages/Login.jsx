@@ -10,15 +10,9 @@ const Login = ({ setIsLogin }) => {
     password: "",
   });
 
-  const handleEmailChange = (event) => {
+  const handleInputChange = (event, key) => {
     const newObj = { ...userInfo };
-    newObj.email = event.target.value;
-    setUserInfo(newObj);
-  };
-
-  const handlePasswordChange = (event) => {
-    const newObj = { ...userInfo };
-    newObj.password = event.target.value;
+    newObj[key] = event.target.value;
     setUserInfo(newObj);
   };
 
@@ -49,14 +43,18 @@ const Login = ({ setIsLogin }) => {
               type="email"
               name="email"
               value={userInfo.email}
-              onChange={handleEmailChange}
+              onChange={(event) => {
+                handleInputChange(event, "email");
+              }}
             />
             <input
               placeholder="Mot de passe"
               type="password"
               name="username"
               value={userInfo.password}
-              onChange={handlePasswordChange}
+              onChange={(event) => {
+                handleInputChange(event, "password");
+              }}
             />
 
             <button type="submit">Se connecter</button>

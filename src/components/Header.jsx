@@ -3,7 +3,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Header = ({ isLogin, setIsLogin }) => {
+const Header = ({ isLogin, setIsLogin, search, setSearch }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -20,7 +20,15 @@ const Header = ({ isLogin, setIsLogin }) => {
         </Link>
         <div className="search-container">
           <FaMagnifyingGlass style={{ color: "#BBBBBB" }} />
-          <input type="text" placeholder="Recherche des articles" />
+          <input
+            type="text"
+            placeholder="Recherche des articles"
+            name="search-articles"
+            value={search}
+            onChange={(event) => {
+              setSearch(event.target.value);
+            }}
+          />
         </div>
         <div className="three-btn">
           <div className="two-btn">
