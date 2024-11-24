@@ -2,7 +2,12 @@ import React from "react";
 import tear from "../assets/img/tear-cb30a259.svg";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import smallVinted from "../assets/img/logo_vinted_small.png";
+import PriceRange from "../components/PriceRange";
+import Toggle from "react-toggle";
+import "react-toggle/style.css";
+import { RiSortAsc, RiSortDesc } from "react-icons/ri";
 
 const Home = ({ search }) => {
   const [data, setData] = useState();
@@ -11,14 +16,14 @@ const Home = ({ search }) => {
   const [sort, setSort] = useState(false);
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
-
   const limitValues = [20, 60, 120];
+  const navigate = useNavigate();
 
-  const handleMinMaxSort = (event, n) => {
-    const newMinMaxPrice = [...minMaxPrice];
-    newMinMaxPrice[n] = Number(event.target.value);
-    setMinMaxPrice(newMinMaxPrice);
-  };
+  // const handleMinMaxSort = (event, n) => {
+  //   const newMinMaxPrice = [...minMaxPrice];
+  //   newMinMaxPrice[n] = Number(event.target.value);
+  //   setMinMaxPrice(newMinMaxPrice);
+  // };
 
   const paginationButtons = () => {
     const totalPages = Math.ceil(data.count / limit);
@@ -35,8 +40,15 @@ const Home = ({ search }) => {
         </button>
       );
     }
-
     return buttons;
+  };
+
+  const updateLimit = (newLimit) => {
+    setLimit(newLimit);
+    const newTotalPages = Math.ceil(data.count / newLimit);
+    if (page > newTotalPages) {
+      setPage(1);
+    }
   };
 
   useEffect(() => {
@@ -66,7 +78,9 @@ const Home = ({ search }) => {
   }, [search, minMaxPrice, sort, limit, page]);
 
   return isLoading ? (
-    <span className="loading">En cours de chargement...</span>
+    <div className="loading-container rotating">
+      <img src={smallVinted} />
+    </div>
   ) : (
     <>
       <div className="home-cover">
@@ -74,38 +88,45 @@ const Home = ({ search }) => {
         <div className="home-cover-container">
           <div className="ready-container">
             <p>Prêts à faire du tri dans vos placards ?</p>
-            <button>Commencer à vendre</button>
+            <button
+              onClick={() => {
+                navigate("/publish");
+              }}
+            >
+              Commencer à vendre
+            </button>
           </div>
         </div>
       </div>
+
       <div className="container">
         <div className="tri-and-limit">
           <div className="tri-articles">
             <div className="tri-par-prix">
-              <span>Trier par prix : </span>
-              <span>
-                <input
-                  type="checkbox"
+              <label>
+                <span>Trier par prix décroissant : </span>
+                <Toggle
                   checked={sort}
-                  name="sort"
-                  value={sort}
-                  onChange={() => {
-                    if (sort) {
-                      setSort(false);
-                    } else {
-                      setSort(true);
-                    }
+                  className="toggle-custom"
+                  icons={{
+                    checked: null,
+                    unchecked: null,
                   }}
-                />
-              </span>
+                  onChange={() => setSort(!sort)}
+                ></Toggle>
+              </label>
             </div>
             <div className="tri-range-prix">
               <p>Prix entre :</p>
-              <input
+              <PriceRange
+                minMaxPrice={minMaxPrice}
+                setMinMaxPrice={setMinMaxPrice}
+              />
+
+              {/* <input
                 type="text"
                 placeholder="0"
                 name="minimum"
-                // value={minMaxPrice[0]}
                 onChange={(event) => {
                   handleMinMaxSort(event, 0);
                 }}
@@ -114,21 +135,10 @@ const Home = ({ search }) => {
                 type="text"
                 placeholder="500"
                 name="maximum"
-                // value={minMaxPrice[1]}
                 onChange={(event) => {
                   handleMinMaxSort(event, 1);
                 }}
-              />
-              {/* <span>
-              <input
-                type="range"
-                id="prix"
-                name="prix"
-                min="0"
-                max="500"
-                step="5"
-              />
-            </span> */}
+              /> */}
             </div>
           </div>
           <div className="limit">
@@ -136,7 +146,7 @@ const Home = ({ search }) => {
             {limitValues.map((limitValue) => (
               <button
                 key={limitValue}
-                onClick={() => setLimit(limitValue)}
+                onClick={() => updateLimit(limitValue)}
                 className={limit === limitValue ? "active" : "desactivate"}
               >
                 {limitValue}
@@ -147,9 +157,7 @@ const Home = ({ search }) => {
 
         <div className="all-offers">
           {data.offers.map((offer) => {
-            // const regex = new RegExp(search, "i");
             return (
-              // regex.test(offer.product_name) && (
               <Link
                 to={`/offer/${offer._id}`}
                 key={offer._id}
@@ -177,12 +185,18 @@ const Home = ({ search }) => {
                     />
                   </div>
                   <div className="product-info">
-                    <div>{offer.product_price} €</div>
+                    <div className="product-info-price">
+                      {offer.product_price} €
+                    </div>
 
                     {offer.product_details.map((details, index) => {
                       return (
                         <React.Fragment key={index}>
-                          {details["MARQUE"] && <div>{details["MARQUE"]}</div>}
+                          {details["MARQUE"] && (
+                            <div className="product-info-marque">
+                              {details["MARQUE"]}
+                            </div>
+                          )}
                         </React.Fragment>
                       );
                     })}
@@ -190,7 +204,11 @@ const Home = ({ search }) => {
                     {offer.product_details.map((details, index) => {
                       return (
                         <React.Fragment key={index}>
-                          {details["TAILLE"] && <div>{details["TAILLE"]}</div>}
+                          {details["TAILLE"] && (
+                            <div className="product-info-taille">
+                              {details["TAILLE"]}
+                            </div>
+                          )}
                         </React.Fragment>
                       );
                     })}
@@ -198,14 +216,10 @@ const Home = ({ search }) => {
                 </div>
               </Link>
             );
-            // );
           })}
         </div>
 
-        <div className="pagination">
-          {paginationButtons()}
-          {/* <div></div> */}
-        </div>
+        <div className="pagination">{paginationButtons()}</div>
       </div>
     </>
   );

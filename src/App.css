@@ -1,7 +1,6 @@
 /* GLOBAL */
-
 #root {
-  font-family: "Maison Neue";
+  font-family: "Roboto";
 }
 
 .container {
@@ -18,6 +17,32 @@ h2 {
   color: #cbcccd;
 }
 
+/* LOADING */
+.loading-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  img {
+    width: 100px;
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  animation: rotating 0.8s linear infinite;
+}
+
 /* HEADER */
 .logo {
   height: 30px;
@@ -27,7 +52,7 @@ h2 {
 .header {
   /* border: solid #000; */
   padding: 10px;
-  margin: 30px 0 30px 0;
+  margin: 15px 0 15px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -94,7 +119,6 @@ h2 {
 /* MAIN */
 
 /* HOME */
-
 .all-offers {
   display: flex;
   flex-wrap: wrap;
@@ -102,7 +126,7 @@ h2 {
   /* justify-content: space-between; */
   justify-content: center;
   /* max-width: 1240px; */
-  margin: 30px auto auto;
+  margin: 60px auto auto;
   gap: 20px;
   /* border: solid #0fc5bc; */
 }
@@ -162,13 +186,25 @@ h2 {
   align-items: center;
   gap: 10px;
   align-self: flex-start;
+  color: #999;
+  font-size: 14px;
 }
 
 .product-info {
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  padding: 8px;
+  gap: 5px;
+
+  .product-info-price {
+    font-size: 16px;
+  }
+
+  .product-info-marque,
+  .product-info-taille {
+    font-size: 14px;
+    color: #999;
+  }
 }
 
 .home-cover {
@@ -208,11 +244,6 @@ h2 {
   border-radius: 5px;
   border: 1px solid rgba(128, 128, 128, 0.445);
 
-  /* border: 1px solid #000; */
-  /* position: absolute;
-  top: 20%;
-  left: 60px; */
-
   p {
     font-size: 35px;
   }
@@ -223,6 +254,7 @@ h2 {
     border: white solid 1px;
     border-radius: 5px;
     padding: 10px 20px;
+    cursor: pointer;
   }
 }
 
@@ -235,10 +267,10 @@ h2 {
 
 .tri-articles {
   display: flex;
-  gap: 20px;
+  gap: 60px;
 }
 
-.tri-par-prix {
+.tri-par-prix label {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -247,9 +279,15 @@ h2 {
 
 .tri-range-prix {
   display: flex;
+  /* align-items: flex-start; */
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
+  width: 300px;
+
+  p {
+    width: 130px;
+  }
 }
 
 .offer-link {
@@ -283,7 +321,6 @@ h2 {
 }
 
 /* OFFER */
-
 .offer {
   display: flex;
   justify-content: center;
@@ -358,14 +395,10 @@ h2 {
 }
 
 .offer-details {
-  /* flex: 1; */
   background-color: white;
   margin: 40px;
-  padding: 20px;
+  padding: 30px;
   width: 400px;
-  /* height: fit-content;
-  min-height: 400px; */
-  /* border: solid #24c80e; */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -376,7 +409,6 @@ h2 {
 .offer-container {
   background-color: #eaedee;
   height: 100vh;
-  /* border: solid #000; */
 
   .price {
     font-size: 25px;
@@ -390,29 +422,50 @@ h2 {
 
   li {
     display: flex;
+    gap: 10px;
   }
 
   ul > li > span {
     flex: 1;
   }
+
+  ul span:nth-child(odd) {
+    color: #999;
+  }
+
+  ul span:nth-child(even) {
+    color: #666;
+    font-weight: 500;
+  }
 }
 
 .hr-offer {
-  border: 1px solid #000;
+  border: 1px solid #efefefa1;
   width: 100%;
 }
 
-.key {
+/* .key {
   color: gray;
   width: 260px;
+} */
+
+.offer-name {
+  font-weight: 700;
+}
+
+.offer-description {
+  color: #666;
 }
 
 .offer-user-info {
   display: flex;
-  /* flex-direction: row-reverse; */
   align-items: center;
   gap: 10px;
-  /* align-self: flex-start; */
+
+  img {
+    height: 50px;
+    width: 50px;
+  }
 }
 
 .buy {
@@ -421,7 +474,7 @@ h2 {
   border: white solid 1px;
   border-radius: 5px;
   padding: 10px 20px;
-  /* width: 300px; */
+  font-size: 16px;
 }
 
 /* LOGIN & SIGNUP */
@@ -500,15 +553,9 @@ h2 {
 }
 
 /* MODAL */
-
 .App {
   position: relative;
 }
-
-/* .home {
-  padding: 20px 50px;
-  font-size: 20px;
-} */
 
 .modal-root {
   /* Pour que la modal prenne tout l'écran : */
@@ -551,4 +598,107 @@ h2 {
 .no-scroll {
   overflow: hidden;
   height: 100vh;
+}
+
+/* TOGGLE (tri par prix) */
+
+/* .toggle-custom.react-toggle:hover:not(.react-toggle--disabled)
+  .react-toggle-track {
+  background-color: #2cb1ba;
+  border: 1px solid #91bf12;
+} */
+
+.toggle-custom.react-toggle--checked .react-toggle-track {
+  background-color: #2cb1ba;
+  /* border: 1px solid #08be66; */
+}
+
+.toggle-custom.react-toggle--checked:hover:not(.react-toggle--disabled)
+  .react-toggle-track {
+  background-color: #2cb1ba;
+  /* border: 1px solid #dd0b0b; */
+}
+
+.react-toggle-track-check {
+  position: absolute;
+  width: 14px;
+  height: 10px;
+  top: 0px;
+  bottom: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  line-height: 0;
+  left: 8px;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease;
+  -moz-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+
+  /* border: 1px solid #d29a16;
+  background-color: #1c19cb; */
+}
+
+.react-toggle--checked .react-toggle-track-check {
+  opacity: 1;
+  -webkit-transition: opacity 0.25s ease;
+  -moz-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+
+  /* border: 1px solid #08a69e; */
+}
+
+.react-toggle-track-x {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 0px;
+  bottom: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  line-height: 0;
+  right: 10px;
+  opacity: 1;
+  -webkit-transition: opacity 0.25s ease;
+  -moz-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+
+  /* border: 1px solid #750eca; */
+}
+
+.toggle-custom.react-toggle-thumb {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #fafafa;
+  border-radius: 50%;
+  background-color: #fafafa;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.toggle-custom.react-toggle--checked .react-toggle-thumb {
+  left: 27px;
+  border-color: #fafafa;
+}
+
+.toggle-custom.react-toggle--focus .react-toggle-thumb {
+  -webkit-box-shadow: 0px 0px 0px 0px #ffffff;
+  -moz-box-shadow: 0px 0px 0px 0px #ffffff;
+  box-shadow: 0px 0px 0px 0px #ffffff;
+}
+
+.toggle-custom.react-toggle:active:not(.react-toggle--disabled)
+  .react-toggle-thumb {
+  -webkit-box-shadow: 0px 0px 0px 0px #ffffff;
+  -moz-box-shadow: 0px 0px 0px 0px #ffffff;
+  box-shadow: 0px 0px 0px 0px #ffffff;
 }

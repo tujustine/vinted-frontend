@@ -94,7 +94,6 @@ const Signup = ({ setIsLogin, visibleSignup, setVisibleSignup }) => {
               </button>
             </div> */}
 
-            {/* <div> */}
             <h2>S'inscrire</h2>
             {otherError && <span style={{ color: "red" }}>{otherError}</span>}
             <form onSubmit={handleSubmit} className="signup">
@@ -164,7 +163,6 @@ const Signup = ({ setIsLogin, visibleSignup, setVisibleSignup }) => {
           </div>
         </div>
       </div>
-      {/* </div> */}
       {/* </div> */}
     </>
   );

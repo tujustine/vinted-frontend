@@ -68,7 +68,14 @@ const Header = ({
               </button>
             )}
           </div>
-          <button className="sell">Vends tes articles</button>
+          <button
+            className="sell"
+            onClick={() => {
+              navigate("/publish");
+            }}
+          >
+            Vends tes articles
+          </button>
         </div>
       </div>
     </div>

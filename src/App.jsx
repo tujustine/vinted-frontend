@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Publish from "./pages/Publish";
 
 // Components
 import Header from "./components/Header";
@@ -40,24 +41,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home search={search} />}></Route>
         <Route path="/offer/:id" element={<Offer />}></Route>
-        {/* <Route
-          path="/signup"
-          element={<Signup setIsLogin={setIsLogin} />}
-        ></Route> */}
-        {/* <Route
-          path="/login"
-          element={<Login setIsLogin={setIsLogin} />}
-        ></Route> */}
+        <Route path="/publish" element={<Publish />}></Route>
       </Routes>
       <Footer />
-      {visibleSignup && (
+      {visibleSignup && !isLogin && (
         <Signup
           setIsLogin={setIsLogin}
           visibleSignup={visibleSignup}
           setVisibleSignup={setVisibleSignup}
         />
       )}
-      {visibleLogin && (
+      {visibleLogin && !isLogin && (
         <Login
           setIsLogin={setIsLogin}
           visibleLogin={visibleLogin}

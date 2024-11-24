@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import smallVinted from "../assets/img/logo_vinted_small.png";
 
 const Offer = () => {
   const { id } = useParams();
@@ -34,7 +35,9 @@ const Offer = () => {
   }, [id]);
 
   return isLoading ? (
-    <span className="loading">En cours de chargement...</span>
+    <div className="loading-container rotating">
+      <img src={smallVinted} />
+    </div>
   ) : (
     <div className="offer-container">
       <div className="offer">
@@ -78,16 +81,16 @@ const Offer = () => {
               return (
                 <ul key={index}>
                   <li>
-                    <span className="key">{key}</span>{" "}
-                    <span className="value">{value}</span>
+                    <span>{key}</span>
+                    <span>{value}</span>
                   </li>
                 </ul>
               );
             })}
           </div>
           <hr className="hr-offer" />
-          <p>{offer.product_name}</p>
-          <p>{offer.product_description}</p>
+          <p className="offer-name">{offer.product_name}</p>
+          <p className="offer-description">{offer.product_description}</p>
           <div className="offer-user-info">
             {offer.owner.account.avatar ? (
               <img
