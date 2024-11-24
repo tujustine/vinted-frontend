@@ -9,11 +9,34 @@ const Home = ({ search }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [minMaxPrice, setMinMaxPrice] = useState([0, 500]);
   const [sort, setSort] = useState(false);
+  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(1);
+
+  const limitValues = [20, 60, 120];
 
   const handleMinMaxSort = (event, n) => {
     const newMinMaxPrice = [...minMaxPrice];
     newMinMaxPrice[n] = Number(event.target.value);
     setMinMaxPrice(newMinMaxPrice);
+  };
+
+  const paginationButtons = () => {
+    const totalPages = Math.ceil(data.count / limit);
+    const buttons = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => setPage(i)}
+          className={page === i ? "active" : "desactivate"}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return buttons;
   };
 
   useEffect(() => {
@@ -27,10 +50,12 @@ const Home = ({ search }) => {
               priceMin: minMaxPrice[0],
               priceMax: minMaxPrice[1],
               sort: sort ? "price-desc" : "price-asc",
+              limit: limit,
+              page: page,
             },
           }
         );
-        // console.log(response.data);
+        console.log(response.data);
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -38,7 +63,7 @@ const Home = ({ search }) => {
       }
     };
     fetchData();
-  }, [search, minMaxPrice, sort]);
+  }, [search, minMaxPrice, sort, limit, page]);
 
   return isLoading ? (
     <span className="loading">En cours de chargement...</span>
@@ -54,48 +79,47 @@ const Home = ({ search }) => {
         </div>
       </div>
       <div className="container">
-        <div className="tri-articles">
-          <div className="tri-par-prix">
-            <span>Trier par prix : </span>
-            <span>
+        <div className="tri-and-limit">
+          <div className="tri-articles">
+            <div className="tri-par-prix">
+              <span>Trier par prix : </span>
+              <span>
+                <input
+                  type="checkbox"
+                  checked={sort}
+                  name="sort"
+                  value={sort}
+                  onChange={() => {
+                    if (sort) {
+                      setSort(false);
+                    } else {
+                      setSort(true);
+                    }
+                  }}
+                />
+              </span>
+            </div>
+            <div className="tri-range-prix">
+              <p>Prix entre :</p>
               <input
-                type="checkbox"
-                checked={sort}
-                name="sort"
-                value={sort}
-                onChange={() => {
-                  if (sort) {
-                    setSort(false);
-                    sortValue = "price-desc";
-                  } else {
-                    setSort(true);
-                    sortValue = "price-asc";
-                  }
+                type="text"
+                placeholder="0"
+                name="minimum"
+                // value={minMaxPrice[0]}
+                onChange={(event) => {
+                  handleMinMaxSort(event, 0);
                 }}
               />
-            </span>
-          </div>
-          <div className="tri-range-prix">
-            <p>Prix entre :</p>
-            <input
-              type="text"
-              placeholder="0"
-              name="minimum"
-              // value={minMaxPrice[0]}
-              onChange={(event) => {
-                handleMinMaxSort(event, 0);
-              }}
-            />
-            <input
-              type="text"
-              placeholder="500"
-              name="maximum"
-              // value={minMaxPrice[1]}
-              onChange={(event) => {
-                handleMinMaxSort(event, 1);
-              }}
-            />
-            {/* <span>
+              <input
+                type="text"
+                placeholder="500"
+                name="maximum"
+                // value={minMaxPrice[1]}
+                onChange={(event) => {
+                  handleMinMaxSort(event, 1);
+                }}
+              />
+              {/* <span>
               <input
                 type="range"
                 id="prix"
@@ -105,9 +129,21 @@ const Home = ({ search }) => {
                 step="5"
               />
             </span> */}
+            </div>
+          </div>
+          <div className="limit">
+            <span>Produits par page </span>
+            {limitValues.map((limitValue) => (
+              <button
+                key={limitValue}
+                onClick={() => setLimit(limitValue)}
+                className={limit === limitValue ? "active" : "desactivate"}
+              >
+                {limitValue}
+              </button>
+            ))}
           </div>
         </div>
-        {/* <div className="offers-wrapper"> */}
 
         <div className="all-offers">
           {data.offers.map((offer) => {
@@ -165,8 +201,12 @@ const Home = ({ search }) => {
             // );
           })}
         </div>
+
+        <div className="pagination">
+          {paginationButtons()}
+          {/* <div></div> */}
+        </div>
       </div>
-      {/* </div> */}
     </>
   );
 };

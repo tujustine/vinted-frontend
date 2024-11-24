@@ -5,7 +5,10 @@ import Cookies from "js-cookie";
 
 const Signup = ({ setIsLogin }) => {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [missingParametersMessage, setMissingParametersMessage] =
+    useState(null);
+  const [existingEmail, setExistingEmail] = useState(null);
+  const [otherError, setOtherError] = useState(null);
 
   const [userInfo, setUserInfo] = useState({
     username: "",
@@ -23,13 +26,14 @@ const Signup = ({ setIsLogin }) => {
   const handleNewsletterChange = (event) => {
     const newObj = { ...userInfo };
     newObj.newsletter = event.target.checked;
-    // newObj.newsletter = !userInfo.newsletter;
     setUserInfo(newObj);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setErrorMessage(null);
+    setMissingParametersMessage(null);
+    setExistingEmail(null);
+    setOtherError(null);
 
     try {
       const response = await axios.post(
@@ -42,9 +46,12 @@ const Signup = ({ setIsLogin }) => {
       navigate("/");
     } catch (error) {
       if (error.response.status === 409) {
-        setErrorMessage("Cette adresse email est déjà utilisée");
+        setExistingEmail("Cette adresse email est déjà utilisée");
+      } else if (error.response.data.message === "Missing parameters") {
+        setMissingParametersMessage("Veuillez remplir tous les champs");
+      } else {
+        setOtherError("Une erreur est survenue, veuillez réessayer !");
       }
-      console.log(error.response);
     }
   };
 
@@ -53,6 +60,7 @@ const Signup = ({ setIsLogin }) => {
       <div className="signup-container">
         <div>
           <h2>S'inscrire</h2>
+          {otherError && <span style={{ color: "red" }}>{otherError}</span>}
           <form onSubmit={handleSubmit} className="signup">
             <input
               placeholder="Nom d'utilisateur"
@@ -63,6 +71,9 @@ const Signup = ({ setIsLogin }) => {
                 handleInputChange(event, "username");
               }}
             />
+            {missingParametersMessage && userInfo.username === "" && (
+              <span style={{ color: "red" }}>{missingParametersMessage}</span>
+            )}
             <input
               placeholder="Email"
               type="email"
@@ -72,6 +83,13 @@ const Signup = ({ setIsLogin }) => {
                 handleInputChange(event, "email");
               }}
             />
+            {existingEmail && (
+              <span style={{ color: "red" }}>{existingEmail}</span>
+            )}
+            {missingParametersMessage && userInfo.email === "" && (
+              <span style={{ color: "red" }}>{missingParametersMessage}</span>
+            )}
+
             <input
               placeholder="Mot de passe"
               type="password"
@@ -81,6 +99,9 @@ const Signup = ({ setIsLogin }) => {
                 handleInputChange(event, "password");
               }}
             />
+            {missingParametersMessage && userInfo.password === "" && (
+              <span style={{ color: "red" }}>{missingParametersMessage}</span>
+            )}
             <div className="checkbox-container">
               <div className="newsletter-checkbox">
                 <input

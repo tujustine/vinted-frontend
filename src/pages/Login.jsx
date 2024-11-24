@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 
 const Login = ({ setIsLogin }) => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -18,6 +20,8 @@ const Login = ({ setIsLogin }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setErrorMessage(null);
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/user/login`,
@@ -28,7 +32,11 @@ const Login = ({ setIsLogin }) => {
       setIsLogin(true);
       navigate("/");
     } catch (error) {
-      console.log(error.response);
+      if (error.response.status === 400) {
+        setErrorMessage("Identifiant ou mot de passe incorrect");
+      } else {
+        setErrorMessage("Une erreur est survenue, veuillez réessayer !");
+      }
     }
   };
 
@@ -37,6 +45,7 @@ const Login = ({ setIsLogin }) => {
       <div className="login-container">
         <div>
           <h2>Se connecter</h2>
+          {errorMessage && <span style={{ color: "red" }}>{errorMessage}</span>}
           <form onSubmit={handleSubmit} className="login">
             <input
               placeholder="Adresse email"
