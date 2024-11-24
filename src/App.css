@@ -292,18 +292,69 @@ h2 {
   /* background-color: #eaedee; */
 }
 
-.offer-picture {
-  /* flex: 1; */
+.offer-pictures {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 40px;
-  /* border: solid #204fbe; */
   height: 605px;
   width: 450px;
+  /* border: solid #204fbe; */
 
-  img {
+  .slide {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 5px;
+    /* box-shadow: 0 0 7px #666; */
   }
+
+  .slide-hidden {
+    display: none;
+  }
+}
+
+.arrow {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  color: white;
+  filter: drop-shadow(0 0 5px #555);
+}
+
+.arrow:hover {
+  cursor: pointer;
+}
+
+.arrow-left {
+  left: 1rem;
+}
+
+.arrow-right {
+  right: 1rem;
+}
+
+.indicators {
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+}
+
+.indicator {
+  background-color: white;
+  height: 10px;
+  width: 0.5rem;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 5px #555;
+  margin: 0 0.2rem;
+  cursor: pointer;
+}
+
+.indicator-inactive {
+  background-color: grey;
 }
 
 .offer-details {
