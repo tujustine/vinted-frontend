@@ -16,7 +16,8 @@ import Footer from "./components/Footer";
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [search, setSearch] = useState("");
-  // const [sortQuery, setSortQuery] = useState({});
+  const [visibleSignup, setVisibleSignup] = useState(false);
+  const [visibleLogin, setVisibleLogin] = useState(false);
 
   useEffect(() => {
     if (Cookies.get("userToken")) {
@@ -31,20 +32,38 @@ function App() {
         setIsLogin={setIsLogin}
         search={search}
         setSearch={setSearch}
+        setVisibleSignup={setVisibleSignup}
+        visibleSignup={visibleSignup}
+        setVisibleLogin={setVisibleLogin}
+        visibleLogin={visibleLogin}
       />
       <Routes>
         <Route path="/" element={<Home search={search} />}></Route>
         <Route path="/offer/:id" element={<Offer />}></Route>
-        <Route
+        {/* <Route
           path="/signup"
           element={<Signup setIsLogin={setIsLogin} />}
-        ></Route>
-        <Route
+        ></Route> */}
+        {/* <Route
           path="/login"
           element={<Login setIsLogin={setIsLogin} />}
-        ></Route>
+        ></Route> */}
       </Routes>
       <Footer />
+      {visibleSignup && (
+        <Signup
+          setIsLogin={setIsLogin}
+          visibleSignup={visibleSignup}
+          setVisibleSignup={setVisibleSignup}
+        />
+      )}
+      {visibleLogin && (
+        <Login
+          setIsLogin={setIsLogin}
+          visibleLogin={visibleLogin}
+          setVisibleLogin={setVisibleLogin}
+        />
+      )}
     </Router>
   );
 }

@@ -28,9 +28,17 @@ const Offer = () => {
   ) : (
     <div className="offer-container">
       <div className="offer">
-        <div className="offer-picture">
-          <img src={offer.product_image.secure_url} alt="article" />
-        </div>
+        {/* <div className="offer-pictures"> */}
+        {/* <img src={offer.product_image.secure_url} alt="article" /> */}
+        {offer.product_pictures.map((article) => {
+          return (
+            <div key={article.asset_id} className="offer-picture">
+              <img src={article.secure_url} className="d-block w-100" />
+            </div>
+          );
+        })}
+        {/* </div> */}
+
         <div className="offer-details">
           <p className="price">{offer.product_price}€</p>
           <div className="offer-infos">

@@ -3,7 +3,16 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Header = ({ isLogin, setIsLogin, search, setSearch }) => {
+const Header = ({
+  isLogin,
+  setIsLogin,
+  search,
+  setSearch,
+  setVisibleSignup,
+  visibleSignup,
+  setVisibleLogin,
+  visibleLogin,
+}) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -36,13 +45,19 @@ const Header = ({ isLogin, setIsLogin, search, setSearch }) => {
               <>
                 <button
                   className="inscription"
-                  onClick={() => navigate("/signup")}
+                  onClick={() => {
+                    // navigate("/signup");
+                    setVisibleSignup(!visibleSignup);
+                  }}
                 >
                   S'inscrire
                 </button>
                 <button
                   className="connexion"
-                  onClick={() => navigate("/login")}
+                  onClick={() => {
+                    // navigate("/login");
+                    setVisibleLogin(!visibleLogin);
+                  }}
                 >
                   Se connecter
                 </button>

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Login = ({ setIsLogin }) => {
+const Login = ({ setIsLogin, visibleLogin, setVisibleLogin }) => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -40,39 +40,67 @@ const Login = ({ setIsLogin }) => {
     }
   };
 
+  useEffect(() => {
+    if (visibleLogin) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [visibleLogin]);
+
   return (
     <>
       <div className="login-container">
-        <div>
-          <h2>Se connecter</h2>
-          {errorMessage && <span style={{ color: "red" }}>{errorMessage}</span>}
-          <form onSubmit={handleSubmit} className="login">
-            <input
-              placeholder="Adresse email"
-              type="email"
-              name="email"
-              value={userInfo.email}
-              onChange={(event) => {
-                handleInputChange(event, "email");
-              }}
-            />
-            <input
-              placeholder="Mot de passe"
-              type="password"
-              name="username"
-              value={userInfo.password}
-              onChange={(event) => {
-                handleInputChange(event, "password");
-              }}
-            />
+        <div
+          className="modal-root"
+          onClick={() => {
+            setVisibleLogin(false);
+          }}
+        >
+          <div
+            className="modal"
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            {/* <div> */}
+            <h2>Se connecter</h2>
+            {errorMessage && (
+              <span style={{ color: "red" }}>{errorMessage}</span>
+            )}
+            <form onSubmit={handleSubmit} className="login">
+              <input
+                placeholder="Adresse email"
+                type="email"
+                name="email"
+                value={userInfo.email}
+                onChange={(event) => {
+                  handleInputChange(event, "email");
+                }}
+              />
+              <input
+                placeholder="Mot de passe"
+                type="password"
+                name="username"
+                value={userInfo.password}
+                onChange={(event) => {
+                  handleInputChange(event, "password");
+                }}
+              />
 
-            <button type="submit">Se connecter</button>
-          </form>
-          <Link to={"/signup"} className="redirection-signup">
-            Pas encore de compte ? Inscris-toi !
-          </Link>
+              <button type="submit">Se connecter</button>
+            </form>
+            <Link to={"/signup"} className="redirection-signup">
+              Pas encore de compte ? Inscris-toi !
+            </Link>
+          </div>
         </div>
       </div>
+      {/* </div> */}
     </>
   );
 };

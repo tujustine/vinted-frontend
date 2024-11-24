@@ -236,7 +236,6 @@ h2 {
 .tri-articles {
   display: flex;
   gap: 20px;
-  /* margin: 20px 0 0 40px; */
 }
 
 .tri-par-prix {
@@ -265,7 +264,6 @@ h2 {
 }
 
 .pagination {
-  /* border: 1px solid #000; */
   text-align: center;
   margin-top: 30px;
   margin-bottom: 50px;
@@ -375,7 +373,7 @@ h2 {
   /* width: 300px; */
 }
 
-/* LOGIN & LOGIN */
+/* LOGIN & SIGNUP */
 .login-container,
 .signup-container {
   max-width: 1240px;
@@ -448,4 +446,58 @@ h2 {
       cursor: pointer;
     }
   }
+}
+
+/* MODAL */
+
+.App {
+  position: relative;
+}
+
+/* .home {
+  padding: 20px 50px;
+  font-size: 20px;
+} */
+
+.modal-root {
+  /* Pour que la modal prenne tout l'écran : */
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  /* Pour placer la modal tout en haut à gauche une fois en position relative */
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Mettre un background noir et transparent : */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  background-color: white;
+  width: 450px;
+  height: 550px;
+  padding: 10px 50px;
+  /* Placer le button en haut à droite de la modal : */
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-end; */
+  align-items: center;
+  justify-content: center;
+  /* border: 5px solid #1a5790; */
+  border-radius: 5px;
+}
+
+.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  border: 3px solid #ab089b;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
 }
