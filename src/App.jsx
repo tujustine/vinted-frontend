@@ -39,9 +39,29 @@ function App() {
         visibleLogin={visibleLogin}
       />
       <Routes>
-        <Route path="/" element={<Home search={search} />}></Route>
+        <Route
+          path="/"
+          element={
+            <Home
+              search={search}
+              isLogin={isLogin}
+              setVisibleLogin={setVisibleLogin}
+              visibleLogin={visibleLogin}
+            />
+          }
+        ></Route>
         <Route path="/offer/:id" element={<Offer />}></Route>
-        <Route path="/publish" element={<Publish />}></Route>
+        <Route
+          path="/publish"
+          element={
+            <Publish
+              isLogin={isLogin}
+              setIsLogin={setIsLogin}
+              setVisibleLogin={setVisibleLogin}
+              visibleLogin={visibleLogin}
+            />
+          }
+        ></Route>
       </Routes>
       <Footer />
       {visibleSignup && !isLogin && (

@@ -30,6 +30,7 @@ const Login = ({ setIsLogin, visibleLogin, setVisibleLogin }) => {
       console.log(response.data);
       Cookies.set("userToken", response.data.token, { expires: 7 });
       setIsLogin(true);
+      setVisibleLogin(false);
       navigate("/");
     } catch (error) {
       if (error.response.status === 400) {

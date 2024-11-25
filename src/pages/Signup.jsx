@@ -43,6 +43,7 @@ const Signup = ({ setIsLogin, visibleSignup, setVisibleSignup }) => {
       console.log(response.data);
       Cookies.set("userToken", response.data.token, { expires: 7 });
       setIsLogin(true);
+      setVisibleSignup(false);
       navigate("/");
     } catch (error) {
       if (error.response.status === 409) {

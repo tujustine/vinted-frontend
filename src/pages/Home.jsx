@@ -9,7 +9,7 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import { RiSortAsc, RiSortDesc } from "react-icons/ri";
 
-const Home = ({ search }) => {
+const Home = ({ search, setVisibleLogin, isLogin }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [minMaxPrice, setMinMaxPrice] = useState([0, 500]);
@@ -90,7 +90,11 @@ const Home = ({ search }) => {
             <p>Prêts à faire du tri dans vos placards ?</p>
             <button
               onClick={() => {
-                navigate("/publish");
+                if (isLogin) {
+                  navigate("/publish");
+                } else {
+                  // setVisibleLogin(true);
+                }
               }}
             >
               Commencer à vendre
