@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Login = ({
   setIsLogin,
   visibleLogin,
   setVisibleLogin,
-  visibleSignup,
   setVisibleSignup,
+  redirectToPublish,
+  setRedirectToPublish,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [errorMessage, setErrorMessage] = useState(null);
 
   const [userInfo, setUserInfo] = useState({
@@ -33,11 +35,19 @@ const Login = ({
         `${import.meta.env.VITE_API_URL}/user/login`,
         userInfo
       );
-      console.log(response.data);
+      // console.log(response.data);
       Cookies.set("userToken", response.data.token, { expires: 7 });
       setIsLogin(true);
-      // setVisibleLogin(false);
-      navigate("/");
+      setVisibleLogin(false);
+
+      console.log(location.state);
+
+      if (redirectToPublish) {
+        navigate("/publish");
+        setRedirectToPublish(false);
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       if (error.response.status === 400) {
         setErrorMessage("Identifiant ou mot de passe incorrect");
@@ -74,7 +84,6 @@ const Login = ({
               event.stopPropagation();
             }}
           >
-            {/* <div> */}
             <h2>Se connecter</h2>
             {errorMessage && <span className="error">{errorMessage}</span>}
             <form onSubmit={handleSubmit} className="login">
@@ -100,7 +109,6 @@ const Login = ({
               <button type="submit">Se connecter</button>
             </form>
             <Link
-              // to={"/signup"}
               className="redirection-signup"
               onClick={() => {
                 setVisibleSignup(true);
@@ -112,7 +120,6 @@ const Login = ({
           </div>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 };

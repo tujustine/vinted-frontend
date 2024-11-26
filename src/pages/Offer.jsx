@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
+// Icons
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+
+// Img
 import smallVinted from "../assets/img/logo_vinted_small.png";
 
-const Offer = () => {
+const Offer = ({ isLogin, setVisibleLogin }) => {
   const { id } = useParams();
   const [offer, setOffer] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [slide, setSlide] = useState(0);
+
+  const navigate = useNavigate();
 
   const nextSlide = () => {
     setSlide(slide === offer.product_pictures.length - 1 ? 0 : slide + 1);
@@ -24,7 +30,7 @@ const Offer = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/v2/offers/${id}`
         );
-        console.log(response.data);
+        // console.log(response.data);
         setOffer(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -42,7 +48,6 @@ const Offer = () => {
     <div className="offer-container">
       <div className="offer">
         <div className="offer-pictures">
-          {/* <img src={offer.product_image.secure_url} alt="article" /> */}
           <SlArrowLeft className="arrow arrow-left" onClick={prevSlide} />
           {offer.product_pictures.map((article, index) => {
             console.log(article);
@@ -112,7 +117,23 @@ const Offer = () => {
             )}
             <span>{offer.owner.account.username}</span>
           </div>
-          <button className="buy">Acheter</button>
+          <button
+            className="buy"
+            onClick={() => {
+              if (isLogin) {
+                navigate("/payment", {
+                  state: {
+                    title: offer.product_name,
+                    price: offer.product_price,
+                  },
+                });
+              } else {
+                setVisibleLogin(true);
+              }
+            }}
+          >
+            Acheter
+          </button>
         </div>
       </div>
     </div>

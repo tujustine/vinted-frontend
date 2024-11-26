@@ -1,4 +1,6 @@
-/* GLOBAL */
+/***********************************************************/
+/************************** GLOBAL **************************/
+/***********************************************************/
 #root {
   font-family: "Roboto";
 }
@@ -33,7 +35,17 @@ h2 {
   justify-content: center;
 }
 
-/* LOADING */
+.bold {
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+/***********************************************************/
+/************************** LOADING **************************/
+/***********************************************************/
 .loading-container {
   max-width: 1240px;
   margin: 0 auto;
@@ -59,7 +71,9 @@ h2 {
   animation: rotating 0.8s linear infinite;
 }
 
-/* HEADER */
+/***********************************************************/
+/************************** HEADER **************************/
+/***********************************************************/
 .logo {
   height: 30px;
   cursor: pointer;
@@ -130,9 +144,13 @@ h2 {
   }
 }
 
-/* MAIN */
+/***********************************************************/
+/************************** MAIN **************************/
+/***********************************************************/
 
-/* HOME */
+/***********************************************************/
+/************************** HOME **************************/
+/***********************************************************/
 .all-offers {
   display: flex;
   flex-wrap: wrap;
@@ -316,7 +334,9 @@ h2 {
   cursor: pointer;
 }
 
-/* OFFER */
+/***********************************************************/
+/************************** OFFER **************************/
+/***********************************************************/
 .offer {
   display: flex;
   justify-content: center;
@@ -346,39 +366,33 @@ h2 {
 
 .arrow {
   position: absolute;
-  width: 2rem;
-  height: 2rem;
+  width: 30px;
+  height: 30px;
   color: white;
-  filter: drop-shadow(0 0 5px #555);
-}
-
-.arrow:hover {
   cursor: pointer;
 }
 
 .arrow-left {
-  left: 1rem;
+  left: 15px;
 }
 
 .arrow-right {
-  right: 1rem;
+  right: 15px;
 }
 
 .indicators {
   display: flex;
   position: absolute;
-  bottom: 1rem;
+  bottom: 10px;
 }
 
 .indicator {
   background-color: white;
   height: 10px;
-  width: 0.5rem;
   border-radius: 50%;
   border: none;
   outline: none;
-  box-shadow: 0 0 5px #555;
-  margin: 0 0.2rem;
+  margin: 0 3px;
   cursor: pointer;
 }
 
@@ -462,9 +476,12 @@ h2 {
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 16px;
+  cursor: pointer;
 }
 
-/* LOGIN & SIGNUP */
+/********************************************************************/
+/************************** LOGIN & SIGNUP **************************/
+/********************************************************************/
 .login-container,
 .signup-container {
   max-width: 1240px;
@@ -539,7 +556,9 @@ h2 {
   }
 }
 
-/* MODAL */
+/***********************************************************/
+/************************** MODAL **************************/
+/***********************************************************/
 .App {
   position: relative;
 }
@@ -567,10 +586,8 @@ h2 {
   /* Placer le button en haut à droite de la modal : */
   display: flex;
   flex-direction: column;
-  /* align-items: flex-end; */
   align-items: center;
   justify-content: center;
-  /* border: 5px solid #1a5790; */
   border-radius: 5px;
 }
 
@@ -587,8 +604,9 @@ h2 {
   height: 100vh;
 }
 
-/* PUBLISH */
-
+/***********************************************************/
+/************************** PUBLISH **************************/
+/***********************************************************/
 .publish-container {
   max-width: 1240px;
   margin: 0 auto;
@@ -661,13 +679,7 @@ h2 {
 
 .publish-pics {
   display: flex;
-  /* flex-direction: row; */
-  /* width: 650px; */
   gap: 20px;
-}
-
-.hidden {
-  display: none;
 }
 
 .add-btn-container {
@@ -725,4 +737,63 @@ hr {
 .publish-pic-preview {
   max-width: 100%;
   max-height: 200px;
+}
+
+/***********************************************************/
+/************************** PAYMENT **************************/
+/***********************************************************/
+.payment-form-container {
+  background-color: #eaedee;
+  padding: 50px;
+}
+
+.payment-form {
+  width: 600px;
+  margin: 50px auto;
+  background-color: white;
+}
+
+.payment-title {
+  font-size: 14px;
+  color: #999;
+  padding: 24px 24px 8px;
+}
+
+.payment-summary {
+  padding: 24px;
+
+  div {
+    color: #666;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.hr-payment {
+  margin: 24px 0;
+}
+
+.payment-total {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.card-payment {
+  padding: 24px;
+}
+
+.pay-btn {
+  background-color: #00bb6a;
+  border-color: #00bb6a;
+  outline: none;
+  border-style: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  color: white;
+  width: 100%;
+  margin-top: 25px;
+  font-size: 16px;
 }

@@ -1,14 +1,16 @@
-import React from "react";
-import tear from "../assets/img/tear-cb30a259.svg";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+// Img
 import smallVinted from "../assets/img/logo_vinted_small.png";
+import tear from "../assets/img/tear-cb30a259.svg";
+
+// Components
 import PriceRange from "../components/PriceRange";
-import { RiSortAsc, RiSortDesc } from "react-icons/ri";
 import SwitchExample from "../components/SwitchExample";
 
-const Home = ({ search, setVisibleLogin, isLogin }) => {
+const Home = ({ search, setVisibleLogin, isLogin, setRedirectToPublish }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [minMaxPrice, setMinMaxPrice] = useState([0, 500]);
@@ -16,13 +18,8 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
   const limitValues = [20, 60, 120];
-  const navigate = useNavigate();
 
-  // const handleMinMaxSort = (event, n) => {
-  //   const newMinMaxPrice = [...minMaxPrice];
-  //   newMinMaxPrice[n] = Number(event.target.value);
-  //   setMinMaxPrice(newMinMaxPrice);
-  // };
+  const navigate = useNavigate();
 
   const paginationButtons = () => {
     const totalPages = Math.ceil(data.count / limit);
@@ -65,7 +62,7 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
             },
           }
         );
-        console.log(response.data);
+        // console.log(response.data);
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -92,6 +89,7 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
                   navigate("/publish");
                 } else {
                   setVisibleLogin(true);
+                  setRedirectToPublish(true);
                 }
               }}
             >
@@ -154,7 +152,6 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
                     )}
                   </div>
 
-                  {/* TODO Changer en product_image quand je passerai à mon back */}
                   <div className="product-img-container">
                     <img
                       src={offer.product_pictures[0].secure_url}

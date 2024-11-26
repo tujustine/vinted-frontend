@@ -9,16 +9,17 @@ import Offer from "./pages/Offer";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Publish from "./pages/Publish";
+import Payment from "./pages/Payment";
 
 // Components
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [search, setSearch] = useState("");
   const [visibleSignup, setVisibleSignup] = useState(false);
   const [visibleLogin, setVisibleLogin] = useState(false);
+  const [redirectToPublish, setRedirectToPublish] = useState(false);
 
   useEffect(() => {
     if (Cookies.get("userToken")) {
@@ -34,9 +35,8 @@ function App() {
         search={search}
         setSearch={setSearch}
         setVisibleSignup={setVisibleSignup}
-        visibleSignup={visibleSignup}
         setVisibleLogin={setVisibleLogin}
-        visibleLogin={visibleLogin}
+        setRedirectToPublish={setRedirectToPublish}
       />
       <Routes>
         <Route
@@ -46,31 +46,32 @@ function App() {
               search={search}
               isLogin={isLogin}
               setVisibleLogin={setVisibleLogin}
-              visibleLogin={visibleLogin}
+              setRedirectToPublish={setRedirectToPublish}
             />
           }
         ></Route>
-        <Route path="/offer/:id" element={<Offer />}></Route>
+        <Route
+          path="/offer/:id"
+          element={
+            <Offer isLogin={isLogin} setVisibleLogin={setVisibleLogin} />
+          }
+        ></Route>
         <Route
           path="/publish"
           element={
-            <Publish
-              isLogin={isLogin}
-              setIsLogin={setIsLogin}
-              setVisibleLogin={setVisibleLogin}
-              visibleLogin={visibleLogin}
-            />
+            <Publish isLogin={isLogin} setVisibleLogin={setVisibleLogin} />
           }
         ></Route>
+        <Route path="/payment" element={<Payment />}></Route>
       </Routes>
-      <Footer />
       {visibleSignup && !isLogin && (
         <Signup
           setIsLogin={setIsLogin}
           visibleSignup={visibleSignup}
           setVisibleSignup={setVisibleSignup}
           setVisibleLogin={setVisibleLogin}
-          visibleLogin={visibleLogin}
+          redirectToPublish={redirectToPublish}
+          setRedirectToPublish={setRedirectToPublish}
         />
       )}
       {visibleLogin && !isLogin && (
@@ -78,8 +79,9 @@ function App() {
           setIsLogin={setIsLogin}
           visibleLogin={visibleLogin}
           setVisibleLogin={setVisibleLogin}
-          visibleSignup={visibleSignup}
           setVisibleSignup={setVisibleSignup}
+          redirectToPublish={redirectToPublish}
+          setRedirectToPublish={setRedirectToPublish}
         />
       )}
     </Router>

@@ -2,7 +2,6 @@ import vintedLogo from "../assets/img/logo-a7c93c98.png";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import Login from "../pages/Login";
 
 const Header = ({
   isLogin,
@@ -10,15 +9,15 @@ const Header = ({
   search,
   setSearch,
   setVisibleSignup,
-  visibleSignup,
   setVisibleLogin,
-  visibleLogin,
+  setRedirectToPublish,
 }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     Cookies.remove("userToken");
     setIsLogin(false);
+    setVisibleLogin(false);
     navigate("/");
   };
 
@@ -47,7 +46,6 @@ const Header = ({
                 <button
                   className="inscription"
                   onClick={() => {
-                    // navigate("/signup");
                     setVisibleSignup(true);
                   }}
                 >
@@ -56,7 +54,6 @@ const Header = ({
                 <button
                   className="connexion"
                   onClick={() => {
-                    // navigate("/login");
                     setVisibleLogin(true);
                   }}
                 >
@@ -76,6 +73,7 @@ const Header = ({
                 navigate("/publish");
               } else {
                 setVisibleLogin(true);
+                setRedirectToPublish(true);
               }
             }}
           >

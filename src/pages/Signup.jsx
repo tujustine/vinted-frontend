@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -7,8 +7,9 @@ const Signup = ({
   setIsLogin,
   visibleSignup,
   setVisibleSignup,
-  visibleLogin,
   setVisibleLogin,
+  redirectToPublish,
+  setRedirectToPublish,
 }) => {
   const navigate = useNavigate();
   const [missingParametersMessage, setMissingParametersMessage] =
@@ -46,11 +47,17 @@ const Signup = ({
         `${import.meta.env.VITE_API_URL}/user/signup`,
         userInfo
       );
-      console.log(response.data);
+      // console.log(response.data);
       Cookies.set("userToken", response.data.token, { expires: 7 });
       setIsLogin(true);
       setVisibleSignup(false);
-      navigate("/");
+
+      if (redirectToPublish) {
+        navigate("/publish");
+        setRedirectToPublish(false);
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       if (error.response.status === 409) {
         setExistingEmail("Cette adresse email est déjà utilisée");
@@ -77,7 +84,6 @@ const Signup = ({
   return (
     <>
       <div className="signup-container">
-        {/* <div> */}
         <div
           className="modal-root"
           onClick={() => {
@@ -163,7 +169,6 @@ const Signup = ({
               <button type="submit">S'inscrire</button>
             </form>
             <Link
-              // to={"/login"}
               className="redirection-login"
               onClick={() => {
                 setVisibleSignup(false);
@@ -175,7 +180,6 @@ const Signup = ({
           </div>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 };
