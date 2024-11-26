@@ -1,20 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-// import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { FaPlus } from "react-icons/fa6";
 
 const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
-  // const [data, setData] = useState();
-  // const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const [previewImage, setPreviewImage] = useState([]);
+
   const [articleInfo, setArticleInfo] = useState({
-    title: "",
-    description: "",
+    title: undefined,
+    description: undefined,
     price: 0,
-    condition: "",
-    city: "",
-    brand: "",
-    size: 0,
-    color: "",
+    condition: undefined,
+    city: undefined,
+    brand: undefined,
+    size: undefined,
+    color: undefined,
     picture: null,
   });
 
@@ -26,7 +28,23 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
     setArticleInfo(newObj);
   };
 
-  return isLogin ? (
+  const handleArticleInfoPicture = (event) => {
+    const file = event.target.files[0];
+    const newObj = { ...articleInfo };
+    newObj.picture = file;
+    setArticleInfo(newObj);
+  };
+
+  useEffect(() => {
+    if (isLogin) {
+      setVisibleLogin(false);
+      navigate("/publish");
+    } else {
+      setVisibleLogin(true);
+    }
+  }, [isLogin, navigate, setVisibleLogin]);
+
+  return (
     <div className="publish-container-background">
       <div className="publish-container">
         <h2>Vends ton article</h2>
@@ -34,11 +52,10 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
           className="publish-article"
           onSubmit={async (event) => {
             event.preventDefault();
-
             try {
               const formData = new FormData();
 
-              for (const [key, value] of formData.entries()) {
+              for (const [key, value] of Object.entries(articleInfo)) {
                 formData.append(key, value);
               }
 
@@ -52,6 +69,7 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
                   },
                 }
               );
+              navigate(`/offer/${response.data._id}`);
               console.log(response.data);
             } catch (error) {
               console.log(error.response);
@@ -60,17 +78,23 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
         >
           <div className="publish-pic-container">
             <div className="publish-pic-container-dotted">
+              <div className="add-pic">
+                <i>
+                  <FaPlus />
+                </i>
+                <label htmlFor="picture">Ajouter une photo</label>
+              </div>
               <input
                 type="file"
-                onChange={(event) => {
-                  handleArticleInfo(event, "picture");
-                }}
+                onChange={handleArticleInfoPicture}
+                className="hidden"
+                id="picture"
               />
             </div>
           </div>
           <div className="publish-title-container">
-            <div>
-              <label htmlFor="">Titre</label>
+            <div className="publish-articles-container">
+              <label htmlFor="title">Titre</label>
               <input
                 type="text"
                 placeholder="ex: Chemise Sézane verte"
@@ -80,10 +104,10 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
                 }}
               />
             </div>
-            <div>
-              <label htmlFor="">Décris ton article</label>
-              <input
-                type="text"
+            <hr />
+            <div className="publish-articles-container">
+              <label htmlFor="description">Décris ton article</label>
+              <textarea
                 placeholder="ex: porté quelques fois, taille correctement"
                 value={articleInfo.description}
                 onChange={(event) => {
@@ -93,8 +117,8 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
             </div>
           </div>
           <div className="publish-description-container">
-            <div>
-              <label htmlFor="">Marque</label>
+            <div className="publish-articles-container">
+              <label htmlFor="brand">Marque</label>
               <input
                 type="text"
                 placeholder="ex: Zara"
@@ -104,19 +128,21 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
                 }}
               />
             </div>
-            <div>
-              <label htmlFor="">Taille</label>
+            <hr />
+            <div className="publish-articles-container">
+              <label htmlFor="size">Taille</label>
               <input
                 type="text"
                 placeholder="ex: L / 40 / 12"
-                value={articleInfo.size}
+                // value={articleInfo.size}
                 onChange={(event) => {
                   handleArticleInfo(event, "size");
                 }}
               />
             </div>
-            <div>
-              <label htmlFor="">Couleur</label>
+            <hr />
+            <div className="publish-articles-container">
+              <label htmlFor="color">Couleur</label>
               <input
                 type="text"
                 placeholder="ex: Fushia"
@@ -126,8 +152,9 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
                 }}
               />
             </div>
-            <div>
-              <label htmlFor="">Etat</label>
+            <hr />
+            <div className="publish-articles-container">
+              <label htmlFor="condition">Etat</label>
               <input
                 type="text"
                 placeholder="Neuf avec étiquette"
@@ -137,8 +164,9 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
                 }}
               />
             </div>
-            <div>
-              <label htmlFor="">Lieu</label>
+            <hr />
+            <div className="publish-articles-container">
+              <label htmlFor="city">Lieu</label>
               <input
                 type="text"
                 placeholder="ex: Paris"
@@ -150,28 +178,32 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
             </div>
           </div>
           <div className="publish-price-container">
-            <div>
-              <label htmlFor="">Prix</label>
-              <input
-                type="text"
-                placeholder="0,00 €"
-                value={articleInfo.price}
-                onChange={(event) => {
-                  handleArticleInfo(event, "price");
-                }}
-              />
-            </div>
-            <div>
-              <input type="checkbox" />
-              <label htmlFor="">Je suis intéressé(e) par les échanges</label>
+            <div className="publish-articles-container">
+              <label htmlFor="price">Prix</label>
+              <div className="price-and-checkbox">
+                <input
+                  type="number"
+                  placeholder="0,00 €"
+                  // value={articleInfo.price}
+                  onChange={(event) => {
+                    handleArticleInfo(event, "price");
+                  }}
+                />
+                <div className="checkbox-echanges publish-articles-container">
+                  <input type="checkbox" className="checkbox-input" />
+                  <label htmlFor="checkbox">
+                    Je suis intéressé(e) par les échanges
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
-          <button type="submit">Ajouter</button>
+          <div className="add-btn-container">
+            <button>Ajouter</button>
+          </div>
         </form>
       </div>
     </div>
-  ) : (
-    setVisibleLogin(!visibleLogin)
   );
 };
 

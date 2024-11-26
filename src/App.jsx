@@ -69,6 +69,8 @@ function App() {
           setIsLogin={setIsLogin}
           visibleSignup={visibleSignup}
           setVisibleSignup={setVisibleSignup}
+          setVisibleLogin={setVisibleLogin}
+          visibleLogin={visibleLogin}
         />
       )}
       {visibleLogin && !isLogin && (
@@ -76,6 +78,8 @@ function App() {
           setIsLogin={setIsLogin}
           visibleLogin={visibleLogin}
           setVisibleLogin={setVisibleLogin}
+          visibleSignup={visibleSignup}
+          setVisibleSignup={setVisibleSignup}
         />
       )}
     </Router>

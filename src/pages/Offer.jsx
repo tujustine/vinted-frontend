@@ -77,15 +77,20 @@ const Offer = () => {
           <p className="price">{offer.product_price}€</p>
           <div className="offer-infos">
             {offer.product_details.map((detail, index) => {
-              const [key, value] = Object.entries(detail)[0];
-              return (
-                <ul key={index}>
-                  <li>
-                    <span>{key}</span>
-                    <span>{value}</span>
-                  </li>
-                </ul>
-              );
+              for (const [key, value] of Object.entries(detail)) {
+                return (
+                  value !== "undefined" &&
+                  value !== "" &&
+                  value !== "none" && (
+                    <ul key={index}>
+                      <li>
+                        <span>{key}</span>
+                        <span>{value}</span>
+                      </li>
+                    </ul>
+                  )
+                );
+              }
             })}
           </div>
           <hr className="hr-offer" />

@@ -3,7 +3,13 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Login = ({ setIsLogin, visibleLogin, setVisibleLogin }) => {
+const Login = ({
+  setIsLogin,
+  visibleLogin,
+  setVisibleLogin,
+  visibleSignup,
+  setVisibleSignup,
+}) => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -95,7 +101,14 @@ const Login = ({ setIsLogin, visibleLogin, setVisibleLogin }) => {
 
               <button type="submit">Se connecter</button>
             </form>
-            <Link to={"/signup"} className="redirection-signup">
+            <Link
+              to={"/signup"}
+              className="redirection-signup"
+              onClick={() => {
+                setVisibleSignup(true);
+                setVisibleLogin(false);
+              }}
+            >
               Pas encore de compte ? Inscris-toi !
             </Link>
           </div>

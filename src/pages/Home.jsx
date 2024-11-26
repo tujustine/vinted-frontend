@@ -32,7 +32,6 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
     for (let i = 1; i <= totalPages; i++) {
       buttons.push(
         <button
-          key={i}
           onClick={() => setPage(i)}
           className={page === i ? "active" : "desactivate"}
         >
@@ -90,11 +89,7 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
             <p>Prêts à faire du tri dans vos placards ?</p>
             <button
               onClick={() => {
-                if (isLogin) {
-                  navigate("/publish");
-                } else {
-                  // setVisibleLogin(true);
-                }
+                navigate("/publish");
               }}
             >
               Commencer à vendre
@@ -126,23 +121,6 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
                 minMaxPrice={minMaxPrice}
                 setMinMaxPrice={setMinMaxPrice}
               />
-
-              {/* <input
-                type="text"
-                placeholder="0"
-                name="minimum"
-                onChange={(event) => {
-                  handleMinMaxSort(event, 0);
-                }}
-              />
-              <input
-                type="text"
-                placeholder="500"
-                name="maximum"
-                onChange={(event) => {
-                  handleMinMaxSort(event, 1);
-                }}
-              /> */}
             </div>
           </div>
           <div className="limit">
@@ -196,11 +174,14 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
                     {offer.product_details.map((details, index) => {
                       return (
                         <React.Fragment key={index}>
-                          {details["MARQUE"] && (
-                            <div className="product-info-marque">
-                              {details["MARQUE"]}
-                            </div>
-                          )}
+                          {details["MARQUE"] &&
+                            details["MARQUE"] !== "undefined" &&
+                            details["MARQUE"] !== "" &&
+                            details["MARQUE"] !== "none" && (
+                              <div className="product-info-marque">
+                                {details["MARQUE"]}
+                              </div>
+                            )}
                         </React.Fragment>
                       );
                     })}
@@ -208,11 +189,14 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
                     {offer.product_details.map((details, index) => {
                       return (
                         <React.Fragment key={index}>
-                          {details["TAILLE"] && (
-                            <div className="product-info-taille">
-                              {details["TAILLE"]}
-                            </div>
-                          )}
+                          {details["TAILLE"] &&
+                            details["TAILLE"] !== "undefined" &&
+                            details["TAILLE"] !== "" &&
+                            details["TAILLE"] !== "none" && (
+                              <div className="product-info-taille">
+                                {details["TAILLE"]}
+                              </div>
+                            )}
                         </React.Fragment>
                       );
                     })}
