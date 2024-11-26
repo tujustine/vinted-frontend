@@ -5,9 +5,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import smallVinted from "../assets/img/logo_vinted_small.png";
 import PriceRange from "../components/PriceRange";
-import Toggle from "react-toggle";
-import "react-toggle/style.css";
 import { RiSortAsc, RiSortDesc } from "react-icons/ri";
+import SwitchExample from "../components/SwitchExample";
 
 const Home = ({ search, setVisibleLogin, isLogin }) => {
   const [data, setData] = useState();
@@ -89,7 +88,11 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
             <p>Prêts à faire du tri dans vos placards ?</p>
             <button
               onClick={() => {
-                navigate("/publish");
+                if (isLogin) {
+                  navigate("/publish");
+                } else {
+                  setVisibleLogin(true);
+                }
               }}
             >
               Commencer à vendre
@@ -102,9 +105,11 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
         <div className="tri-and-limit">
           <div className="tri-articles">
             <div className="tri-par-prix">
-              <label>
-                <span>Trier par prix décroissant : </span>
-                <Toggle
+              <SwitchExample
+                onChange={() => setSort(!sort)}
+                name="Tri par prix : "
+              />
+              {/* <Toggle
                   checked={sort}
                   className="toggle-custom"
                   icons={{
@@ -112,8 +117,8 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
                     unchecked: null,
                   }}
                   onChange={() => setSort(!sort)}
-                ></Toggle>
-              </label>
+                ></Toggle> */}
+              {/* </label> */}
             </div>
             <div className="tri-range-prix">
               <p>Prix entre :</p>

@@ -198,8 +198,8 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
               </div>
             </div>
           </div>
-          <div className="add-btn-container">
-            <button>Ajouter</button>
+          <div>
+            <button className="add-btn-container">Ajouter</button>
           </div>
         </form>
       </div>

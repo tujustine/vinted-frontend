@@ -102,7 +102,7 @@ const Signup = ({
             </div> */}
 
             <h2>S'inscrire</h2>
-            {otherError && <span style={{ color: "red" }}>{otherError}</span>}
+            {otherError && <span className="error">{otherError}</span>}
             <form onSubmit={handleSubmit} className="signup">
               <input
                 placeholder="Nom d'utilisateur"
@@ -114,7 +114,7 @@ const Signup = ({
                 }}
               />
               {missingParametersMessage && userInfo.username === "" && (
-                <span style={{ color: "red" }}>{missingParametersMessage}</span>
+                <span className="error">{missingParametersMessage}</span>
               )}
               <input
                 placeholder="Email"
@@ -125,11 +125,9 @@ const Signup = ({
                   handleInputChange(event, "email");
                 }}
               />
-              {existingEmail && (
-                <span style={{ color: "red" }}>{existingEmail}</span>
-              )}
+              {existingEmail && <span className="error">{existingEmail}</span>}
               {missingParametersMessage && userInfo.email === "" && (
-                <span style={{ color: "red" }}>{missingParametersMessage}</span>
+                <span className="error">{missingParametersMessage}</span>
               )}
 
               <input
@@ -142,7 +140,7 @@ const Signup = ({
                 }}
               />
               {missingParametersMessage && userInfo.password === "" && (
-                <span style={{ color: "red" }}>{missingParametersMessage}</span>
+                <span className="error">{missingParametersMessage}</span>
               )}
               <div className="checkbox-container">
                 <div className="newsletter-checkbox">
@@ -165,7 +163,7 @@ const Signup = ({
               <button type="submit">S'inscrire</button>
             </form>
             <Link
-              to={"/login"}
+              // to={"/login"}
               className="redirection-login"
               onClick={() => {
                 setVisibleSignup(false);

@@ -7,7 +7,6 @@ const PriceRange = ({ minMaxPrice, setMinMaxPrice }) => {
       min={0}
       max={500}
       values={minMaxPrice}
-      onFinalChange={(newValues) => setMinMaxPrice(newValues)}
       onChange={(newValues) => setMinMaxPrice(newValues)}
       renderTrack={({ props, children }) => (
         <div

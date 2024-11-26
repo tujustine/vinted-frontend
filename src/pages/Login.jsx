@@ -36,7 +36,7 @@ const Login = ({
       console.log(response.data);
       Cookies.set("userToken", response.data.token, { expires: 7 });
       setIsLogin(true);
-      setVisibleLogin(false);
+      // setVisibleLogin(false);
       navigate("/");
     } catch (error) {
       if (error.response.status === 400) {
@@ -76,9 +76,7 @@ const Login = ({
           >
             {/* <div> */}
             <h2>Se connecter</h2>
-            {errorMessage && (
-              <span style={{ color: "red" }}>{errorMessage}</span>
-            )}
+            {errorMessage && <span className="error">{errorMessage}</span>}
             <form onSubmit={handleSubmit} className="login">
               <input
                 placeholder="Adresse email"
@@ -102,7 +100,7 @@ const Login = ({
               <button type="submit">Se connecter</button>
             </form>
             <Link
-              to={"/signup"}
+              // to={"/signup"}
               className="redirection-signup"
               onClick={() => {
                 setVisibleSignup(true);

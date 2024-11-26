@@ -48,7 +48,7 @@ const Header = ({
                   className="inscription"
                   onClick={() => {
                     // navigate("/signup");
-                    setVisibleSignup(!visibleLogin);
+                    setVisibleSignup(true);
                   }}
                 >
                   S'inscrire
@@ -57,7 +57,7 @@ const Header = ({
                   className="connexion"
                   onClick={() => {
                     // navigate("/login");
-                    setVisibleLogin(!visibleLogin);
+                    setVisibleLogin(true);
                   }}
                 >
                   Se connecter
@@ -72,7 +72,11 @@ const Header = ({
           <button
             className="sell"
             onClick={() => {
-              navigate("/publish");
+              if (isLogin) {
+                navigate("/publish");
+              } else {
+                setVisibleLogin(true);
+              }
             }}
           >
             Vends tes articles
