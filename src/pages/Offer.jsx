@@ -45,6 +45,8 @@ const Offer = () => {
           {/* <img src={offer.product_image.secure_url} alt="article" /> */}
           <SlArrowLeft className="arrow arrow-left" onClick={prevSlide} />
           {offer.product_pictures.map((article, index) => {
+            console.log(article);
+
             return (
               <img
                 src={article.secure_url}
@@ -95,7 +97,10 @@ const Offer = () => {
           </div>
           <hr className="hr-offer" />
           <p className="offer-name">{offer.product_name}</p>
-          <p className="offer-description">{offer.product_description}</p>
+          <p className="offer-description">
+            {offer.product_description !== "undefined" &&
+              offer.product_description}
+          </p>
           <div className="offer-user-info">
             {offer.owner.account.avatar ? (
               <img

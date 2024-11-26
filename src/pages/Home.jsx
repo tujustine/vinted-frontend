@@ -109,16 +109,6 @@ const Home = ({ search, setVisibleLogin, isLogin }) => {
                 onChange={() => setSort(!sort)}
                 name="Tri par prix : "
               />
-              {/* <Toggle
-                  checked={sort}
-                  className="toggle-custom"
-                  icons={{
-                    checked: null,
-                    unchecked: null,
-                  }}
-                  onChange={() => setSort(!sort)}
-                ></Toggle> */}
-              {/* </label> */}
             </div>
             <div className="tri-range-prix">
               <p>Prix entre :</p>

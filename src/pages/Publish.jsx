@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { FaPlus } from "react-icons/fa6";
 
 const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
   const navigate = useNavigate();
-  const [previewImage, setPreviewImage] = useState([]);
+  const [preview, setPreview] = useState([]);
 
   const [articleInfo, setArticleInfo] = useState({
     title: undefined,
@@ -17,7 +17,7 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
     brand: undefined,
     size: undefined,
     color: undefined,
-    picture: null,
+    picture: [],
   });
 
   const token = Cookies.get("userToken");
@@ -29,10 +29,12 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
   };
 
   const handleArticleInfoPicture = (event) => {
-    const file = event.target.files[0];
-    const newObj = { ...articleInfo };
-    newObj.picture = file;
-    setArticleInfo(newObj);
+    const files = Array.from(event.target.files);
+    const newPics = [...articleInfo.picture, ...files];
+    const newPreview = files.map((file) => URL.createObjectURL(file));
+
+    setArticleInfo({ ...articleInfo, picture: newPics });
+    setPreview([...preview, ...newPreview]);
   };
 
   useEffect(() => {
@@ -56,7 +58,11 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
               const formData = new FormData();
 
               for (const [key, value] of Object.entries(articleInfo)) {
-                formData.append(key, value);
+                if (key === "picture") {
+                  value.forEach((file) => formData.append("picture", file));
+                } else {
+                  formData.append(key, value);
+                }
               }
 
               const response = await axios.post(
@@ -78,18 +84,56 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
         >
           <div className="publish-pic-container">
             <div className="publish-pic-container-dotted">
-              <div className="add-pic">
-                <i>
-                  <FaPlus />
-                </i>
-                <label htmlFor="picture">Ajouter une photo</label>
-              </div>
-              <input
-                type="file"
-                onChange={handleArticleInfoPicture}
-                className="hidden"
-                id="picture"
-              />
+              {preview.length > 0 ? (
+                <div className="publish-pics-and-label">
+                  <div className="publish-pics">
+                    {preview.map((pic, index) => {
+                      return (
+                        <img
+                          key={index}
+                          src={pic}
+                          alt="Aperçu"
+                          className="publish-pic-preview"
+                        />
+                      );
+                    })}
+                  </div>
+
+                  <label
+                    htmlFor="picture"
+                    className={preview.length === 5 ? "disabled" : "add-pic"}
+                  >
+                    <i>
+                      <FaPlus />
+                    </i>
+
+                    <span>Ajouter une photo (maximum 5)</span>
+                  </label>
+
+                  <input
+                    disabled={preview.length === 5 ? "disabled" : ""}
+                    type="file"
+                    onChange={handleArticleInfoPicture}
+                    className="hidden"
+                    id="picture"
+                  />
+                </div>
+              ) : (
+                <>
+                  <label htmlFor="picture" className="add-pic">
+                    <i>
+                      <FaPlus />
+                    </i>
+                    <span>Ajouter une photo (maximum 5)</span>
+                  </label>
+                  <input
+                    type="file"
+                    onChange={handleArticleInfoPicture}
+                    className="hidden"
+                    id="picture"
+                  />
+                </>
+              )}
             </div>
           </div>
           <div className="publish-title-container">
@@ -198,8 +242,8 @@ const Publish = ({ isLogin, setVisibleLogin, visibleLogin }) => {
               </div>
             </div>
           </div>
-          <div>
-            <button className="add-btn-container">Ajouter</button>
+          <div className="add-btn-container">
+            <button>Ajouter</button>
           </div>
         </form>
       </div>
