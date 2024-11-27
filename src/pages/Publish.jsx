@@ -11,14 +11,8 @@ const Publish = ({ isLogin, setVisibleLogin }) => {
   const [preview, setPreview] = useState([]);
 
   const [articleInfo, setArticleInfo] = useState({
-    title: undefined,
-    description: undefined,
+    title: "",
     price: 0,
-    condition: undefined,
-    city: undefined,
-    brand: undefined,
-    size: undefined,
-    color: undefined,
     picture: [],
   });
 
@@ -64,7 +58,9 @@ const Publish = ({ isLogin, setVisibleLogin }) => {
                   if (key === "picture") {
                     value.forEach((file) => formData.append("picture", file));
                   } else {
-                    formData.append(key, value);
+                    if (value !== "") {
+                      formData.append(key, value);
+                    }
                   }
                 }
 

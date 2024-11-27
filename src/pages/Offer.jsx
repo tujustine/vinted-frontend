@@ -86,16 +86,12 @@ const Offer = ({ isLogin, setVisibleLogin }) => {
             {offer.product_details.map((detail, index) => {
               for (const [key, value] of Object.entries(detail)) {
                 return (
-                  value !== "undefined" &&
-                  value !== "" &&
-                  value !== "none" && (
-                    <ul key={index}>
-                      <li>
-                        <span>{key}</span>
-                        <span>{value}</span>
-                      </li>
-                    </ul>
-                  )
+                  <ul key={index}>
+                    <li>
+                      <span>{key}</span>
+                      <span>{value}</span>
+                    </li>
+                  </ul>
                 );
               }
             })}
@@ -103,8 +99,7 @@ const Offer = ({ isLogin, setVisibleLogin }) => {
           <hr className="hr-offer" />
           <p className="offer-name">{offer.product_name}</p>
           <p className="offer-description">
-            {offer.product_description !== "undefined" &&
-              offer.product_description}
+            {offer.product_description && offer.product_description}
           </p>
           <div className="offer-user-info">
             {offer.owner.account.avatar ? (

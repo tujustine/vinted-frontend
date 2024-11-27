@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const Login = ({
@@ -12,7 +12,6 @@ const Login = ({
   setRedirectToPublish,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [errorMessage, setErrorMessage] = useState(null);
 
   const [userInfo, setUserInfo] = useState({
@@ -40,7 +39,7 @@ const Login = ({
       setIsLogin(true);
       setVisibleLogin(false);
 
-      console.log(location.state);
+      // console.log(location.state);
 
       if (redirectToPublish) {
         navigate("/publish");

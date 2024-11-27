@@ -166,14 +166,11 @@ const Home = ({ search, setVisibleLogin, isLogin, setRedirectToPublish }) => {
                     {offer.product_details.map((details, index) => {
                       return (
                         <React.Fragment key={index}>
-                          {details["MARQUE"] &&
-                            details["MARQUE"] !== "undefined" &&
-                            details["MARQUE"] !== "" &&
-                            details["MARQUE"] !== "none" && (
-                              <div className="product-info-marque">
-                                {details["MARQUE"]}
-                              </div>
-                            )}
+                          {details["MARQUE"] && (
+                            <div className="product-info-marque">
+                              {details["MARQUE"]}
+                            </div>
+                          )}
                         </React.Fragment>
                       );
                     })}
@@ -181,14 +178,11 @@ const Home = ({ search, setVisibleLogin, isLogin, setRedirectToPublish }) => {
                     {offer.product_details.map((details, index) => {
                       return (
                         <React.Fragment key={index}>
-                          {details["TAILLE"] &&
-                            details["TAILLE"] !== "undefined" &&
-                            details["TAILLE"] !== "" &&
-                            details["TAILLE"] !== "none" && (
-                              <div className="product-info-taille">
-                                {details["TAILLE"]}
-                              </div>
-                            )}
+                          {details["TAILLE"] && (
+                            <div className="product-info-taille">
+                              {details["TAILLE"]}
+                            </div>
+                          )}
                         </React.Fragment>
                       );
                     })}
